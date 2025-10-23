@@ -640,7 +640,7 @@
                             <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Top%20Hat.png" alt="Top Hat" class="w-8 h-8" />
                             Yeshiva Bochur
                         </span>
-                        <span class="hidden md:inline text-purple-500/50">•</span>
+                        <span id="hero-separator" class="hidden md:inline text-purple-500/50" style="opacity: 0;">•</span>
                         <span id="hero-coder" class="flex items-center justify-center gap-2 bg-zinc-900/50 backdrop-blur-md px-6 py-3 rounded-full border border-purple-500/50 shine text-white">
                             <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Sparkles.png" alt="Sparkles" class="w-8 h-8" />
                             Vibe Coder
@@ -1199,13 +1199,17 @@
                 duration: 1.2,
                 ease: 'elastic.out(1, 0.5)'
             }, "+=0.3")
-            .addLabel("coderStart") // Add a label here
+            .addLabel("coderStart", "-=0.9") // Add a label for synchronization
             .from('#hero-coder', {
                 x: 400,
                 opacity: 0,
                 duration: 1.2,
                 ease: 'elastic.out(1, 0.5)'
-            }, "-=0.9")
+            }, "coderStart") // Start coder animation at the label
+            .to('#hero-separator', {
+                opacity: 1,
+                duration: 0.8
+            }, "coderStart") // Start separator fade-in at the same label
             .to('#hero-arrow', {
                 opacity: 1,
                 duration: 0.8,
