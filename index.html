@@ -1145,22 +1145,21 @@
                 });
             });
 
-            // Loading bar animation
             const loadingBar = document.querySelector('.loading-bar');
-            gsap.to(loadingBar, {
-                width: '100%',
-                duration: 1,
-                ease: 'power2.inOut'
-            });
 
             // Main timeline
             const tl = gsap.timeline();
-            tl.to('.loader-overlay', {
+            tl.to(loadingBar, {
+                width: '100%',
+                duration: 1,
+                ease: 'power2.inOut'
+            })
+            .to('.loader-overlay', {
                 yPercent: -100,
                 duration: 1.2,
                 ease: 'expo.inOut',
-                delay: 1
             })
+            .to(loadingBar, { opacity: 0, duration: 0.5 }, "-=0.3")
             .from('.hero-hi', {
                 y: -100,
                 opacity: 0,
@@ -1198,6 +1197,7 @@
                 duration: 1.2,
                 ease: 'elastic.out(1, 0.5)'
             }, "+=0.3")
+            .addLabel("coderStart") // Add a label here
             .from('#hero-coder', {
                 x: 400,
                 opacity: 0,
@@ -1208,8 +1208,7 @@
                 opacity: 1,
                 duration: 0.8,
                 ease: 'power2.out',
-                delay: 0.5
-            });
+            }, "coderStart"); // Start at the 'coderStart' label
 
             // Parallax effect on hero banner
             gsap.to('.hero-banner', {
