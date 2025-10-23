@@ -646,9 +646,9 @@
                     </span>
                 </div>
             </div>
-            <div id="hero-arrow" class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-strong-bounce opacity-0">
+            <a href="#terminal-section" id="hero-arrow" class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-strong-bounce opacity-0">
                 <i data-feather="arrow-down" class="text-white w-8 h-8"></i>
-            </div>
+            </a>
         </section>
 
         <!-- Terminal Section -->
@@ -1081,21 +1081,6 @@
             });
         });
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    gsap.to(window, {
-                        scrollTo: { y: target, offsetY: 80 },
-                        duration: 1,
-                        ease: 'power3.inOut'
-                    });
-                }
-            });
-        });
-
         // Particle system
         function createParticle(x, y) {
             const particle = document.createElement('div');
@@ -1134,6 +1119,31 @@
         // GSAP Animations
         document.addEventListener('DOMContentLoaded', () => {
             gsap.registerPlugin(ScrollTrigger, TextPlugin, ScrollToPlugin);
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const target = document.querySelector(targetId);
+
+                    if (targetId === '#terminal-section') {
+                        // Special handling for terminal due to pinning
+                        const terminalTrigger = ScrollTrigger.getById("terminalPin");
+                        gsap.to(window, {
+                            scrollTo: { y: terminalTrigger.start + 100, autoKill: false },
+                            duration: 1.5,
+                            ease: 'power3.inOut'
+                        });
+                    } else if (target) {
+                        gsap.to(window, {
+                            scrollTo: { y: target, offsetY: 80 },
+                            duration: 1,
+                            ease: 'power3.inOut'
+                        });
+                    }
+                });
+            });
 
             // Loading bar animation
             const loadingBar = document.querySelector('.loading-bar');
@@ -1276,6 +1286,7 @@
             const terminalTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: "#terminal-section",
+                    id: "terminalPin", // Add an ID for easy reference
                     start: "top top",
                     end: "+=8000",
                     scrub: 1,
@@ -1300,7 +1311,7 @@
             });
 
             terminalTl.to("#hero", { opacity: 0, duration: 2 })
-              .from(".terminal", { opacity: 0, scale: 0.95, duration: 2 }, "-=")
+              .from(".terminal", { opacity: 0, scale: 0.95, duration: 0.1 }, "-=1.9")
               .to("#line1-text", { text: "whoami", duration: 1.2, delay: 1, onComplete: scrollTerminal })
               .set("#line1 .blinking-cursor", { display: "none" })
               .set("#line2", { display: "block", text: "dev-in-the-bm", onComplete: scrollTerminal })
