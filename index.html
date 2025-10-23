@@ -425,6 +425,20 @@
             60% { transform: translateY(-5px); }
         }
         
+        @keyframes strong-bounce {
+            0%, 100% {
+                transform: translateY(-45%);
+                animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+            }
+            50% {
+                transform: translateY(0);
+                animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+            }
+        }
+        .animate-strong-bounce {
+            animation: strong-bounce 1s infinite;
+        }
+
         .scroll-indicator {
             animation: bounce 2s infinite;
         }
@@ -632,8 +646,8 @@
                     </span>
                 </div>
             </div>
-            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-                <i data-feather="arrow-down" class="text-zinc-600"></i>
+            <div id="hero-arrow" class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-strong-bounce opacity-0">
+                <i data-feather="arrow-down" class="text-white w-8 h-8"></i>
             </div>
         </section>
 
@@ -1179,7 +1193,13 @@
                 opacity: 0,
                 duration: 1.2,
                 ease: 'elastic.out(1, 0.5)'
-            }, "-=0.9");
+            }, "-=0.9")
+            .to('#hero-arrow', {
+                opacity: 1,
+                duration: 0.8,
+                ease: 'power2.out',
+                delay: 0.5
+            });
 
             // Parallax effect on hero banner
             gsap.to('.hero-banner', {
