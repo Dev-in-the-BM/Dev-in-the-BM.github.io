@@ -638,15 +638,8 @@
             animation: shine 2s infinite;
         }
 
-        .about-point {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .about-point.is-visible {
-            opacity: 1;
-            transform: translateY(0);
+        .about-point-immersive {
+            will-change: transform, opacity;
         }
         </style>
 </head>
@@ -808,61 +801,77 @@
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" class="py-20 px-6 animate-on-scroll">
-            <div class="max-w-7xl mx-auto">
-                <h2 class="text-5xl font-black text-center mb-12 reveal-text">
-                    <span class="reveal-text-inner">
-                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Information.png" alt="Information" width="50" height="50" class="inline-emoji" /> About Me
-                    </span>
-                </h2>
-                <div class="space-y-24">
-                    <!-- Point 1: Yeshiva Bochur -->
-                    <div class="about-point flex items-center gap-12">
-                        <div class="w-1/2">
-                            <h3 class="text-4xl font-bold mb-4 gradient-text">Yeshiva Bochur</h3>
-                            <p class="text-gray-300 text-xl">Currently learning בתולה נשאת, delving into the depths of Torah and tradition.</p>
-                        </div>
-                        <div class="w-1/2">
-                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Scroll.png" alt="Scroll" class="w-48 h-48 mx-auto morph-shape" />
-                        </div>
-                    </div>
-
-                    <!-- Point 2: JTech Forums -->
-                    <div class="about-point flex items-center gap-12">
-                        <div class="w-1/2">
-                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Technologist.png" alt="Technologist" class="w-48 h-48 mx-auto morph-shape" />
-                        </div>
-                        <div class="w-1/2">
-                            <h3 class="text-4xl font-bold mb-4 gradient-text">JTech Forums</h3>
-                            <p class="text-gray-300 text-xl">Engaging in discussions on filtering, Linux, app modding, and all things tech-related.</p>
-                        </div>
-                    </div>
-
-                    <!-- Point 3: App Modder -->
-                    <div class="about-point flex items-center gap-12">
-                        <div class="w-1/2">
-                            <h3 class="text-4xl font-bold mb-4 gradient-text">App Modder</h3>
-                            <p class="text-gray-300 text-xl">Crafting kosher mods for filtered devices to enhance user experience and maintain standards.</p>
-                        </div>
-                        <div class="w-1/2">
-                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Wrench.png" alt="Wrench" class="w-48 h-48 mx-auto morph-shape" />
-                        </div>
-                    </div>
-
-                    <!-- Point 4: Linux Enthusiast -->
-                    <div class="about-point flex items-center gap-12">
-                        <div class="w-1/2">
-                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Penguin.png" alt="Penguin" class="w-48 h-48 mx-auto morph-shape" />
-                        </div>
-                        <div class="w-1/2">
-                            <h3 class="text-4xl font-bold mb-4 gradient-text">Linux Enthusiast</h3>
-                            <p class="text-gray-300 text-xl">Navigating the world of open-source, constantly tinkering and exploring new possibilities.</p>
-                        </div>
-                    </div>
+<!-- About Section -->
+<section id="about" class="py-20 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-5xl font-black text-center mb-24 reveal-text">
+            <span class="reveal-text-inner">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Information.png" alt="Information" width="50" height="50" class="inline-emoji" /> About Me
+            </span>
+        </h2>
+    </div>
+    <div class="space-y-32">
+        <!-- Point 1: Yeshiva Bochur -->
+        <div class="about-point-immersive relative flex items-center justify-center text-center h-[60vh]">
+            <div class="about-bg-element absolute inset-0 z-0 opacity-10">
+                <!-- Placeholder for background graphic -->
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="p1" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M50 0 L100 50 L50 100 L0 50 Z" stroke="#374151" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(#p1)"/></svg>
+            </div>
+            <div class="relative z-10 p-8 rounded-lg">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Scroll.png" alt="Scroll" class="about-icon w-32 h-32 mx-auto mb-6" />
+                <div class="about-text">
+                    <h3 class="text-5xl font-bold mb-4 gradient-text">Yeshiva Bochur</h3>
+                    <p class="text-gray-300 text-2xl max-w-2xl mx-auto">Currently learning בתולה נשאת, delving into the depths of Torah and tradition.</p>
                 </div>
             </div>
-        </section>
+        </div>
+
+        <!-- Point 2: JTech Forums -->
+        <div class="about-point-immersive relative flex items-center justify-center text-center h-[60vh]">
+            <div class="about-bg-element absolute inset-0 z-0 opacity-10">
+                <!-- Placeholder for background graphic -->
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="p2" width="80" height="80" patternUnits="userSpaceOnUse"><circle cx="40" cy="40" r="30" stroke="#374151" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(#p2)"/></svg>
+            </div>
+            <div class="relative z-10 p-8 rounded-lg">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Technologist.png" alt="Technologist" class="about-icon w-32 h-32 mx-auto mb-6" />
+                <div class="about-text">
+                    <h3 class="text-5xl font-bold mb-4 gradient-text">JTech Forums</h3>
+                    <p class="text-gray-300 text-2xl max-w-2xl mx-auto">Engaging in discussions on filtering, Linux, app modding, and all things tech-related.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Point 3: App Modder -->
+        <div class="about-point-immersive relative flex items-center justify-center text-center h-[60vh]">
+            <div class="about-bg-element absolute inset-0 z-0 opacity-10">
+                <!-- Placeholder for background graphic -->
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="p3" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M0 0 H60 V60 H0 Z" stroke="#374151" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(#p3)"/></svg>
+            </div>
+            <div class="relative z-10 p-8 rounded-lg">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Wrench.png" alt="Wrench" class="about-icon w-32 h-32 mx-auto mb-6" />
+                <div class="about-text">
+                    <h3 class="text-5xl font-bold mb-4 gradient-text">App Modder</h3>
+                    <p class="text-gray-300 text-2xl max-w-2xl mx-auto">Crafting kosher mods for filtered devices to enhance user experience and maintain standards.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Point 4: Linux Enthusiast -->
+        <div class="about-point-immersive relative flex items-center justify-center text-center h-[60vh]">
+            <div class="about-bg-element absolute inset-0 z-0 opacity-10">
+                <!-- Placeholder for background graphic -->
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="p4" width="120" height="120" patternUnits="userSpaceOnUse"><path d="M20 60 L60 20 L100 60 L60 100 Z" stroke="#374151" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(#p4)"/></svg>
+            </div>
+            <div class="relative z-10 p-8 rounded-lg">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Penguin.png" alt="Penguin" class="about-icon w-32 h-32 mx-auto mb-6" />
+                <div class="about-text">
+                    <h3 class="text-5xl font-bold mb-4 gradient-text">Linux Enthusiast</h3>
+                    <p class="text-gray-300 text-2xl max-w-2xl mx-auto">Navigating the world of open-source, constantly tinkering and exploring new possibilities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
         <!-- Projects Section -->
         <section id="projects" class="py-20 px-6 animate-on-scroll">
@@ -1545,19 +1554,35 @@
                         });
                     });
 
-                    // Animate "About Me" points on scroll
-                    gsap.utils.toArray('.about-point').forEach(point => {
-                        gsap.fromTo(point,
-                            { opacity: 0, y: 50 },
+                    // Animate "About Me" immersive points on scroll
+                    gsap.utils.toArray('.about-point-immersive').forEach(section => {
+                        const bg = section.querySelector('.about-bg-element');
+                        const icon = section.querySelector('.about-icon');
+                        const text = section.querySelector('.about-text');
+
+                        gsap.fromTo(bg,
+                            { yPercent: -20 },
                             {
-                                opacity: 1,
-                                y: 0,
-                                duration: 0.8,
-                                ease: 'power3.out',
+                                yPercent: 20,
+                                ease: 'none',
                                 scrollTrigger: {
-                                    trigger: point,
-                                    start: 'top 80%',
-                                    end: 'bottom 20%',
+                                    trigger: section,
+                                    scrub: true
+                                }
+                            }
+                        );
+
+                        gsap.fromTo([icon, text],
+                            { y: 100, opacity: 0 },
+                            {
+                                y: 0,
+                                opacity: 1,
+                                duration: 1,
+                                ease: 'power3.out',
+                                stagger: 0.2,
+                                scrollTrigger: {
+                                    trigger: section,
+                                    start: 'top 70%',
                                     toggleActions: 'play none none reverse'
                                 }
                             }
