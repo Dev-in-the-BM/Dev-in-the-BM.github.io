@@ -1430,6 +1430,27 @@
                   scale: 0.95,
                   duration: 2,
                   onComplete: () => {
+                    // About Me section card animations
+                    const aboutCards = gsap.utils.toArray('#about .card');
+                    gsap.set(aboutCards, { opacity: 0, y: 100, rotationX: -90, transformOrigin: 'top center' });
+                    ScrollTrigger.create({
+                        trigger: '#about',
+                        start: 'top 60%',
+                        onEnter: () => {
+                            gsap.to(aboutCards, {
+                                opacity: 1,
+                                y: 0,
+                                rotationX: 0,
+                                stagger: 0.2,
+                                duration: 1,
+                                ease: 'elastic.out(1, 0.5)',
+                            });
+                        },
+                        onLeaveBack: () => {
+                             gsap.set(aboutCards, { opacity: 0, y: 100, rotationX: -90, transformOrigin: 'top center' });
+                        }
+                    });
+
                     // Animate sections after terminal - STAGGERED REVEALS
                     sectionsToAnimate.forEach((section, index) => {
                         gsap.fromTo(section,
