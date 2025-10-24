@@ -638,6 +638,16 @@
             animation: shine 2s infinite;
         }
 
+        .about-point {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .about-point.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
         </style>
 </head>
 <body class="bg-black">
@@ -806,48 +816,48 @@
                         <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Information.png" alt="Information" width="50" height="50" class="inline-emoji" /> About Me
                     </span>
                 </h2>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <!-- Card 1: Yeshiva Bochur -->
-                    <div class="card ripple hover:scale-105 transition-transform duration-300">
-                        <div class="flex items-start gap-4">
-                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Top%20Hat.png" alt="Top Hat" width="40" height="40" class="inline-emoji morph-shape" />
-                            <div class="flex-1">
-                                <h3 class="text-2xl font-bold mb-3 gradient-text">Yeshiva bochur</h3>
-                                <p class="text-gray-300 text-lg">Currently learning בתולה נשאת</p>
-                            </div>
+                <div class="space-y-24">
+                    <!-- Point 1: Yeshiva Bochur -->
+                    <div class="about-point flex items-center gap-12">
+                        <div class="w-1/2">
+                            <h3 class="text-4xl font-bold mb-4 gradient-text">Yeshiva Bochur</h3>
+                            <p class="text-gray-300 text-xl">Currently learning בתולה נשאת, delving into the depths of Torah and tradition.</p>
+                        </div>
+                        <div class="w-1/2">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Scroll.png" alt="Scroll" class="w-48 h-48 mx-auto morph-shape" />
                         </div>
                     </div>
 
-                    <!-- Card 2: JTech Forums -->
-                    <div class="card ripple hover:scale-105 transition-transform duration-300">
-                        <div class="flex items-start gap-4">
-                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Left%20Speech%20Bubble.png" alt="Speech Bubble" width="40" height="40" class="inline-emoji morph-shape" />
-                            <div class="flex-1">
-                                <h3 class="text-2xl font-bold mb-3 gradient-text">JTech Forums</h3>
-                                <p class="text-gray-300 text-lg">Discussing filtering, Linux, app modding, and pretty much anything tech related</p>
-                            </div>
+                    <!-- Point 2: JTech Forums -->
+                    <div class="about-point flex items-center gap-12">
+                        <div class="w-1/2">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Technologist.png" alt="Technologist" class="w-48 h-48 mx-auto morph-shape" />
+                        </div>
+                        <div class="w-1/2">
+                            <h3 class="text-4xl font-bold mb-4 gradient-text">JTech Forums</h3>
+                            <p class="text-gray-300 text-xl">Engaging in discussions on filtering, Linux, app modding, and all things tech-related.</p>
                         </div>
                     </div>
 
-                    <!-- Card 3: App Modder -->
-                    <div class="card ripple hover:scale-105 transition-transform duration-300">
-                        <div class="flex items-start gap-4">
-                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Hammer%20and%20Wrench.png" alt="Hammer and Wrench" width="40" height="40" class="inline-emoji morph-shape" />
-                            <div class="flex-1">
-                                <h3 class="text-2xl font-bold mb-3 gradient-text">App modder</h3>
-                                <p class="text-gray-300 text-lg">Creating kosher mods for filtered devices</p>
-                            </div>
+                    <!-- Point 3: App Modder -->
+                    <div class="about-point flex items-center gap-12">
+                        <div class="w-1/2">
+                            <h3 class="text-4xl font-bold mb-4 gradient-text">App Modder</h3>
+                            <p class="text-gray-300 text-xl">Crafting kosher mods for filtered devices to enhance user experience and maintain standards.</p>
+                        </div>
+                        <div class="w-1/2">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Wrench.png" alt="Wrench" class="w-48 h-48 mx-auto morph-shape" />
                         </div>
                     </div>
 
-                    <!-- Card 4: Linux Enthusiast -->
-                    <div class="card ripple hover:scale-105 transition-transform duration-300">
-                        <div class="flex items-start gap-4">
-                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Penguin.png" alt="Penguin" width="40" height="40" class="inline-emoji morph-shape" />
-                            <div class="flex-1">
-                                <h3 class="text-2xl font-bold mb-3 gradient-text">Linux Enthusiast</h3>
-                                <p class="text-gray-300 text-lg">Somehow my Linux environment still works. Not sure why.</p>
-                            </div>
+                    <!-- Point 4: Linux Enthusiast -->
+                    <div class="about-point flex items-center gap-12">
+                        <div class="w-1/2">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Penguin.png" alt="Penguin" class="w-48 h-48 mx-auto morph-shape" />
+                        </div>
+                        <div class="w-1/2">
+                            <h3 class="text-4xl font-bold mb-4 gradient-text">Linux Enthusiast</h3>
+                            <p class="text-gray-300 text-xl">Navigating the world of open-source, constantly tinkering and exploring new possibilities.</p>
                         </div>
                     </div>
                 </div>
@@ -1533,6 +1543,25 @@
                                 scrub: 0.5
                             }
                         });
+                    });
+
+                    // Animate "About Me" points on scroll
+                    gsap.utils.toArray('.about-point').forEach(point => {
+                        gsap.fromTo(point,
+                            { opacity: 0, y: 50 },
+                            {
+                                opacity: 1,
+                                y: 0,
+                                duration: 0.8,
+                                ease: 'power3.out',
+                                scrollTrigger: {
+                                    trigger: point,
+                                    start: 'top 80%',
+                                    end: 'bottom 20%',
+                                    toggleActions: 'play none none reverse'
+                                }
+                            }
+                        );
                     });
                   }
               });
