@@ -569,7 +569,76 @@
         .filter-white {
             filter: brightness(0) invert(1);
         }
-    </style>
+    
+        /* Enhanced About Me Card Animations */
+        .gradient-text {
+            background: linear-gradient(90deg, #9333ea, #3b82f6, #06b6d4);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% {
+                background-position: 0% center;
+            }
+            50% {
+                background-position: 100% center;
+            }
+        }
+
+        .morph-shape {
+            animation: morph 4s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes morph {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+            }
+            25% {
+                transform: scale(1.1) rotate(5deg);
+            }
+            50% {
+                transform: scale(1) rotate(-5deg);
+            }
+            75% {
+                transform: scale(1.05) rotate(3deg);
+            }
+        }
+
+        .card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(147, 51, 234, 0.1), transparent);
+            animation: shine 4s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .card:hover::before {
+            animation: shine 2s infinite;
+        }
+
+        </style>
 </head>
 <body class="bg-black">
     <div class="loading-bar"></div>
@@ -738,67 +807,46 @@
                     </span>
                 </h2>
                 <div class="grid md:grid-cols-2 gap-8">
-                    <div class="card ripple">
-                        <h3 class="text-2xl font-semibold mb-6 flex items-center gap-3">
-                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Top%20Hat.png" alt="Top Hat" width="25" height="25" class="inline-emoji" />
-                            My Journey
-                        </h3>
-                        <div class="space-y-4">
-                            <p class="text-gray-300 flex items-start gap-3 about-item">
-                                <span class="text-purple-500 mt-1">•</span>
-                                Yeshiva bochur - currently learning בתולה נשאת
-                            </p>
-                            <p class="text-gray-300 flex items-start gap-3 about-item">
-                                <span class="text-blue-500 mt-1">•</span>
-                                App modder - I love making app mods, out of my *flip phone*
-                            </p>
-                            <p class="text-gray-300 flex items-start gap-3 about-item">
-                                <span class="text-green-500 mt-1">•</span>
-                                Active on <a href="http://forums.jtechforums.org/invites/8jD5U8NMxr" class="text-blue-400 hover:text-blue-300 underline shine">JTech Forums</a> — discussing filtering, Linux, app modding, and pretty much anything tech related
-                            </p>
-                            <p class="text-gray-300 flex items-start gap-3 about-item">
-                                <span class="text-yellow-500 mt-1">•</span>
-                                Do you think Linux on desktop is ready to go mainstream? <a href="https://forums.jtechforums.org/t/make-linux-mainstream/1754" class="text-blue-400 hover:text-blue-300 underline shine">Make Linux Mainstream</a>
-                            </p>
-                            <p class="text-gray-300 flex items-start gap-3 about-item">
-                                <span class="text-red-500 mt-1">•</span>
-                                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Desktop%20Computer.png" alt="Desktop Computer" width="30" height="30" class="inline-emoji" /> Somehow my Linux environment still works. Not sure why.
-                            </p>
+                    <!-- Card 1: Yeshiva Bochur -->
+                    <div class="card ripple hover:scale-105 transition-transform duration-300">
+                        <div class="flex items-start gap-4">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Top%20Hat.png" alt="Top Hat" width="40" height="40" class="inline-emoji morph-shape" />
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-bold mb-3 gradient-text">Yeshiva bochur</h3>
+                                <p class="text-gray-300 text-lg">Currently learning בתולה נשאת</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="card ripple">
-                        <h3 class="text-2xl font-semibold mb-6 flex items-center gap-3">
-                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Brain.png" alt="Brain" width="30" height="30" class="inline-emoji" />
-                            Focus Areas
-                        </h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800 transition-colors focus-item">
-                                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Penguin.png" alt="Penguin" width="25" height="25" class="inline-emoji" />
-                                <div>
-                                    <p class="font-semibold text-white">Linux Enthusiast</p>
-                                    <p class="text-sm text-gray-400">Making Linux mainstream, one command at a time</p>
-                                </div>
+
+                    <!-- Card 2: JTech Forums -->
+                    <div class="card ripple hover:scale-105 transition-transform duration-300">
+                        <div class="flex items-start gap-4">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Left%20Speech%20Bubble.png" alt="Speech Bubble" width="40" height="40" class="inline-emoji morph-shape" />
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-bold mb-3 gradient-text">JTech Forums</h3>
+                                <p class="text-gray-300 text-lg">Discussing filtering, Linux, app modding, and pretty much anything tech related</p>
                             </div>
-                            <div class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800 transition-colors focus-item">
-                                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Hammer%20and%20Wrench.png" alt="Hammer and Wrench" width="25" height="25" class="inline-emoji" />
-                                <div>
-                                    <p class="font-semibold text-white">App Modding</p>
-                                    <p class="text-sm text-gray-400">Creating kosher mods for filtered devices</p>
-                                </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: App Modder -->
+                    <div class="card ripple hover:scale-105 transition-transform duration-300">
+                        <div class="flex items-start gap-4">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Hammer%20and%20Wrench.png" alt="Hammer and Wrench" width="40" height="40" class="inline-emoji morph-shape" />
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-bold mb-3 gradient-text">App modder</h3>
+                                <p class="text-gray-300 text-lg">Creating kosher mods for filtered devices</p>
                             </div>
-                            <div class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800 transition-colors focus-item">
-                                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Left%20Speech%20Bubble.png" alt="Left Speech Bubble" width="25" height="25" class="inline-emoji" />
-                                <div>
-                                    <p class="font-semibold text-white">Community Building</p>
-                                    <p class="text-sm text-gray-400">Active contributor to JTech Forums</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800 transition-colors focus-item">
-                                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Mobile%20Phone.png" alt="Mobile Phone" width="25" height="25" class="inline-emoji" />
-                                <div>
-                                    <p class="font-semibold text-white">Mobile Development</p>
-                                    <p class="text-sm text-gray-400">From flip phones to modern apps</p>
-                                </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Linux Enthusiast -->
+                    <div class="card ripple hover:scale-105 transition-transform duration-300">
+                        <div class="flex items-start gap-4">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Penguin.png" alt="Penguin" width="40" height="40" class="inline-emoji morph-shape" />
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-bold mb-3 gradient-text">Linux Enthusiast</h3>
+                                <p class="text-gray-300 text-lg">Somehow my Linux environment still works. Not sure why.</p>
                             </div>
                         </div>
                     </div>
