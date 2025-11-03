@@ -643,19 +643,23 @@
                 height: 100% !important;
                 background-size: 200% auto !important;
                 background-repeat: no-repeat;
-background-position: 85% 50% !important;
+                background-position: 85% 50% !important;
             }
 
             #hero .absolute.inset-0.bg-gradient-to-t {
-                background: linear-gradient(to bottom, black 0%, transparent 45%, transparent 55%, black 100%) !important;
-                z-index: 1;
+                background: linear-gradient(to bottom, 
+                    black 0%, 
+                    rgba(0,0,0,0.7) 30%, 
+                    transparent 50%, 
+                    rgba(0,0,0,0.7) 70%, 
+                    black 100%
+                ) !important;
+                z-index: 2;
             }
 
             #hero .bg-black.opacity-50 {
-                z-index: 1;
+                display: none !important;
             }
-
-
         }
         </style>
 </head>
