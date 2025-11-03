@@ -638,6 +638,22 @@
             animation: shine 2s infinite;
         }
 
+        @media (max-width: 768px) {
+            .hero-banner {
+                height: 100% !important;
+                background-size: 200% auto !important;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            #hero .absolute.inset-0.bg-gradient-to-t {
+                background: linear-gradient(to bottom, black 0%, transparent 30%, transparent 70%, black 100%);
+            }
+
+            #hero .bg-black.opacity-50 {
+                opacity: 0.2 !important; /* Reduced from 0.5 */
+            }
+        }
         </style>
 </head>
 <body class="bg-black">
@@ -1268,14 +1284,18 @@
             }, "coderStart"); // Start at the 'coderStart' label
 
             // Parallax effect on hero banner
-            gsap.to('.hero-banner', {
-                yPercent: 30,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '.hero-section',
-                    start: 'top top',
-                    end: 'bottom top',
-                    scrub: 1
+            ScrollTrigger.matchMedia({
+                "(min-width: 769px)": function() {
+                    gsap.to('.hero-banner', {
+                        yPercent: 30,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: '.hero-section',
+                            start: 'top top',
+                            end: 'bottom top',
+                            scrub: 1
+                        }
+                    });
                 }
             });
 
