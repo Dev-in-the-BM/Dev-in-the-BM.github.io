@@ -36,7 +36,6 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
-        z-index: 1;
     }
 
         #main-container {
@@ -1291,6 +1290,10 @@
             }, "coderStart"); // Start at the 'coderStart' label
 
             // Parallax effect on hero banner
+            // Enhanced gradient blob animations
+            const blobContainer = document.getElementById('gradient-blob-container');
+            gsap.set(blobContainer, { opacity: 0 });
+
             ScrollTrigger.matchMedia({
                 "(min-width: 769px)": function() {
                     gsap.to('.hero-banner', {
@@ -1303,57 +1306,101 @@
                             scrub: 1
                         }
                     });
+
+                    const blobCount = 15;
+                    const colors = [
+                        'radial-gradient(circle, rgba(168, 85, 247, 0.5), transparent 70%)',
+                        'radial-gradient(circle, rgba(236, 72, 153, 0.5), transparent 70%)',
+                        'radial-gradient(circle, rgba(59, 130, 246, 0.5), transparent 70%)',
+                        'radial-gradient(circle, rgba(6, 182, 212, 0.5), transparent 70%)',
+                        'radial-gradient(circle, rgba(234, 179, 8, 0.4), transparent 70%)',
+                        'radial-gradient(circle, rgba(249, 115, 22, 0.4), transparent 70%)'
+                    ];
+
+                    for (let i = 0; i < blobCount; i++) {
+                        const blob = document.createElement('div');
+                        blob.style.position = 'absolute';
+                        
+                        const size = gsap.utils.random(window.innerWidth * 0.15, window.innerWidth * 0.35);
+                        blob.style.width = `${size}px`;
+                        blob.style.height = `${size}px`;
+                        
+                        blob.style.background = gsap.utils.random(colors);
+                        blob.style.borderRadius = '50%';
+                        blob.style.filter = `blur(${gsap.utils.random(100, 150)}px)`;
+                        blob.style.opacity = gsap.utils.random(0.6, 1);
+                        blobContainer.appendChild(blob);
+
+                        gsap.set(blob, {
+                            x: gsap.utils.random(-size / 2, window.innerWidth - size / 2),
+                            y: gsap.utils.random(-size / 2, window.innerHeight - size / 2),
+                        });
+
+                        function animateBlob() {
+                            const newSize = gsap.utils.random(window.innerWidth * 0.15, window.innerWidth * 0.35);
+                            gsap.to(blob, {
+                                x: gsap.utils.random(-newSize / 2, window.innerWidth - newSize / 2),
+                                y: gsap.utils.random(-newSize / 2, window.innerHeight - newSize / 2),
+                                width: `${newSize}px`,
+                                height: `${newSize}px`,
+                                opacity: gsap.utils.random(0.5, 1),
+                                borderRadius: () => `${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% / ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}%`,
+                                duration: gsap.utils.random(20, 30),
+                                ease: 'none',
+                                onComplete: animateBlob
+                            });
+                        }
+                        animateBlob();
+                    }
+                },
+                "(max-width: 768px)": function() {
+                    const blobCount = 10;
+                    const colors = [
+                        'radial-gradient(circle, rgba(168, 85, 247, 0.8), transparent 70%)',
+                        'radial-gradient(circle, rgba(236, 72, 153, 0.8), transparent 70%)',
+                        'radial-gradient(circle, rgba(59, 130, 246, 0.8), transparent 70%)',
+                        'radial-gradient(circle, rgba(6, 182, 212, 0.8), transparent 70%)',
+                        'radial-gradient(circle, rgba(234, 179, 8, 0.7), transparent 70%)',
+                        'radial-gradient(circle, rgba(249, 115, 22, 0.7), transparent 70%)'
+                    ];
+
+                    for (let i = 0; i < blobCount; i++) {
+                        const blob = document.createElement('div');
+                        blob.style.position = 'absolute';
+                        
+                        const size = gsap.utils.random(window.innerWidth * 0.3, window.innerWidth * 0.6);
+                        blob.style.width = `${size}px`;
+                        blob.style.height = `${size}px`;
+                        
+                        blob.style.background = gsap.utils.random(colors);
+                        blob.style.borderRadius = '50%';
+                        blob.style.filter = `blur(${gsap.utils.random(50, 80)}px)`;
+                        blob.style.opacity = gsap.utils.random(0.8, 1);
+                        blobContainer.appendChild(blob);
+
+                        gsap.set(blob, {
+                            x: gsap.utils.random(-size / 2, window.innerWidth - size / 2),
+                            y: gsap.utils.random(-size / 2, window.innerHeight - size / 2),
+                        });
+
+                        function animateBlob() {
+                            const newSize = gsap.utils.random(window.innerWidth * 0.3, window.innerWidth * 0.6);
+                            gsap.to(blob, {
+                                x: gsap.utils.random(-newSize / 2, window.innerWidth - newSize / 2),
+                                y: gsap.utils.random(-newSize / 2, window.innerHeight - newSize / 2),
+                                width: `${newSize}px`,
+                                height: `${newSize}px`,
+                                opacity: gsap.utils.random(0.8, 1),
+                                borderRadius: () => `${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% / ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}%`,
+                                duration: gsap.utils.random(15, 25),
+                                ease: 'none',
+                                onComplete: animateBlob
+                            });
+                        }
+                        animateBlob();
+                    }
                 }
             });
-
-            // Enhanced gradient blob animations
-            const blobContainer = document.getElementById('gradient-blob-container');
-            gsap.set(blobContainer, { opacity: 0 });
-            const blobCount = 15;
-            const colors = [
-                'radial-gradient(circle, rgba(168, 85, 247, 0.5), transparent 70%)',
-                'radial-gradient(circle, rgba(236, 72, 153, 0.5), transparent 70%)',
-                'radial-gradient(circle, rgba(59, 130, 246, 0.5), transparent 70%)',
-                'radial-gradient(circle, rgba(6, 182, 212, 0.5), transparent 70%)',
-                'radial-gradient(circle, rgba(234, 179, 8, 0.4), transparent 70%)',
-                'radial-gradient(circle, rgba(249, 115, 22, 0.4), transparent 70%)'
-            ];
-
-            for (let i = 0; i < blobCount; i++) {
-                const blob = document.createElement('div');
-                blob.style.position = 'absolute';
-                
-                const size = gsap.utils.random(window.innerWidth * 0.15, window.innerWidth * 0.35);
-                blob.style.width = `${size}px`;
-                blob.style.height = `${size}px`;
-                
-                blob.style.background = gsap.utils.random(colors);
-                blob.style.borderRadius = '50%';
-                blob.style.filter = `blur(${gsap.utils.random(100, 150)}px)`;
-                blob.style.opacity = gsap.utils.random(0.6, 1);
-                blobContainer.appendChild(blob);
-
-                gsap.set(blob, {
-                    x: gsap.utils.random(-size / 2, window.innerWidth - size / 2),
-                    y: gsap.utils.random(-size / 2, window.innerHeight - size / 2),
-                });
-
-                function animateBlob() {
-                    const newSize = gsap.utils.random(window.innerWidth * 0.15, window.innerWidth * 0.35);
-                    gsap.to(blob, {
-                        x: gsap.utils.random(-newSize / 2, window.innerWidth - newSize / 2),
-                        y: gsap.utils.random(-newSize / 2, window.innerHeight - newSize / 2),
-                        width: `${newSize}px`,
-                        height: `${newSize}px`,
-                        opacity: gsap.utils.random(0.5, 1),
-                        borderRadius: () => `${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% / ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}% ${gsap.utils.random(40, 60)}%`,
-                        duration: gsap.utils.random(20, 30),
-                        ease: 'none',
-                        onComplete: animateBlob
-                    });
-                }
-                animateBlob();
-            }
 
             function scrollTerminal() {
                 const el = document.querySelector('.terminal-content');
