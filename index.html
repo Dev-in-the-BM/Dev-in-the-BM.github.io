@@ -573,7 +573,34 @@
         .filter-white {
             filter: brightness(0) invert(1);
         }
-    
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 3rem; /* text-4xl */
+            }
+            h2 {
+                font-size: 2.5rem; /* text-3xl */
+            }
+            h3 {
+                font-size: 1.5rem; /* text-xl */
+            }
+            p {
+                font-size: 1rem; /* text-base */
+            }
+            .hero-subtitle {
+                font-size: 1.125rem; /* text-lg */
+            }
+            .hero-waving-hand {
+                width: 60px;
+                height: 60px;
+            }
+            .hero-title-char {
+                font-size: 3rem; /* Adjust based on h1 */
+            }
+            .hero-subtitle .gap-4 {
+                gap: 0.5rem; /* Reduce gap in hero subtitle */
+            }
+        }
+
         @media (max-width: 768px) {
             .terminal {
                 height: 300px; /* Smaller height for mobile */
@@ -706,7 +733,7 @@
         
         <!-- Navigation -->
         <nav class="fixed top-0 w-full bg-black bg-opacity-20 backdrop-filter backdrop-blur-xl z-50 border-b border-white border-opacity-10">
-            <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="max-w-7xl mx-auto px-4 py-4">
                 <div class="flex justify-end items-center">
 
                     <div class="hidden md:flex items-center gap-6">
@@ -786,7 +813,7 @@
         </section>
 
         <!-- Terminal Section -->
-        <section id="terminal-section" class="min-h-screen flex items-center justify-center px-6">
+        <section id="terminal-section" class="min-h-screen flex items-center justify-center px-4">
             <div class="terminal max-w-3xl mx-auto w-full">
                 <div class="terminal-header">
                     <div class="absolute left-1/2 transform -translate-x-1/2 text-white font-bold text-sm">Terminal</div>
@@ -858,7 +885,7 @@
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-20 px-6">
+        <section id="about" class="py-20 px-4">
             <div class="max-w-7xl mx-auto">
                 <h2 class="text-5xl font-black text-center mb-12 reveal-text">
                     <span class="reveal-text-inner">
@@ -914,7 +941,7 @@
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="py-20 px-6 animate-on-scroll">
+        <section id="projects" class="py-20 px-4 animate-on-scroll">
             <div class="max-w-7xl mx-auto">
                 <h2 class="text-5xl font-black text-center mb-12 reveal-text">
                     <span class="reveal-text-inner">
@@ -978,7 +1005,7 @@
         </section>
 
         <!-- Sponsor Section -->
-        <section id="sponsor" class="py-20 px-6 animate-on-scroll">
+        <section id="sponsor" class="py-20 px-4 animate-on-scroll">
             <div class="max-w-7xl mx-auto">
                 <h2 class="text-5xl font-black text-center mb-12 reveal-text">
                     <span class="reveal-text-inner"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gem%20Stone.png" alt="Gem Stone" width="50" height="50" class="inline-emoji" /> Sponsor my projects</span>
@@ -1014,7 +1041,7 @@
         </section>
 
         <!-- Skills Section -->
-        <section id="skills" class="py-20 px-6 animate-on-scroll">
+        <section id="skills" class="py-20 px-4 animate-on-scroll">
             <div class="max-w-7xl mx-auto">
                 <h2 class="text-5xl font-black text-center mb-12 reveal-text">
                     <span class="reveal-text-inner">
@@ -1053,7 +1080,7 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-20 px-6 animate-on-scroll">
+        <section id="contact" class="py-20 px-4 animate-on-scroll">
             <div class="max-w-4xl mx-auto text-center">
                 <h2 class="text-5xl font-black mb-8 reveal-text">
                     <span class="reveal-text-inner">
@@ -1085,7 +1112,7 @@
         </section>
 
         <!-- Footer -->
-        <footer class="py-12 px-6 border-t border-gray-800">
+        <footer class="py-12 px-4 border-t border-gray-800">
             <div class="max-w-7xl mx-auto text-center">
                 <p class="text-gray-500 text-lg">
                     © 2025 Dev-in-the-BM. Built with <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Brain.png" alt="Brain" width="25" height="25" class="inline-emoji" /> Yiddeshe Kup and lots of <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Food/Hot%20Beverage.png" alt="Hot Beverage" width="25" height="25" class="inline-emoji" />
