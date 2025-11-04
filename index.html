@@ -32,12 +32,15 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
             cursor: none;
     }
+
+        #terminal-section {
+            background-color: var(--bg-primary);
+        }
 
         #main-container {
             min-height: 100vh;
@@ -641,21 +644,11 @@
 
         @media (max-width: 768px) {
             .hero-banner {
-                height: 100% !important;
-                background-size: 200% auto !important;
-                background-repeat: no-repeat;
-                background-position: 85% 50% !important;
+                display: none !important;
             }
 
             #hero .absolute.inset-0.bg-gradient-to-t {
-                background: linear-gradient(to bottom, 
-                    black 0%, 
-                    rgba(0,0,0,0.7) 30%, 
-                    transparent 50%, 
-                    rgba(0,0,0,0.7) 70%, 
-                    black 100%
-                ) !important;
-                z-index: 2;
+                background: none !important;
             }
 
             #hero .bg-black.opacity-50 {
@@ -745,6 +738,7 @@
             <a href="#terminal-section" id="hero-arrow" class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-strong-bounce opacity-0">
                 <i data-feather="arrow-down" class="text-white w-8 h-8"></i>
             </a>
+            <div class="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-black to-transparent md:hidden"></div>
         </section>
 
         <!-- Terminal Section -->
@@ -1294,7 +1288,11 @@
             // Parallax effect on hero banner
             // Enhanced gradient blob animations
             const blobContainer = document.getElementById('gradient-blob-container');
-            gsap.set(blobContainer, { opacity: 0 });
+            if (window.matchMedia("(max-width: 768px)").matches) {
+                gsap.set(blobContainer, { opacity: 1 });
+            } else {
+                gsap.set(blobContainer, { opacity: 0 });
+            }
 
             ScrollTrigger.matchMedia({
                 "(min-width: 769px)": function() {
@@ -1424,7 +1422,6 @@
                     scrub: 1,
                     pin: true,
                     onEnter: () => {
-                        gsap.to('#gradient-blob-container', { opacity: 0, duration: 1 });
                         gsap.to('.terminal', { scale: 1.02, duration: 0.5, ease: 'power2.out' });
                     },
                     onLeave: () => {
@@ -1436,13 +1433,13 @@
                         gsap.to('.terminal', { scale: 1.02, duration: 0.5 });
                     },
                     onLeaveBack: () => {
-                        gsap.to('#gradient-blob-container', { opacity: 0, duration: 1 });
                         gsap.to('.terminal', { scale: 1, duration: 0.5 });
                     },
                 }
             });
 
             terminalTl.to("#hero", { opacity: 0, duration: 2 })
+              .to('#gradient-blob-container', { opacity: 0, duration: 2 }, "-=2")
               .from(".terminal", { opacity: 0, scale: 0.95, duration: 0.1 }, "-=1.9")
               .to("#line1-text", { text: "whoami", duration: 1.2, delay: 1, onComplete: scrollTerminal })
               .set("#line1 .blinking-cursor", { display: "none" })
