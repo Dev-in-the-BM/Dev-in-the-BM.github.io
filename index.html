@@ -1123,11 +1123,11 @@
         // Initialize Feather Icons
         feather.replace();
 
-        function toggleMobileMenu() {
+        function toggleMobileMenu(forceClose = false) {
             const menu = document.getElementById('mobile-menu');
             const menuItems = menu.querySelectorAll('a');
 
-            if (menu.classList.contains('menu-open')) {
+            if (menu.classList.contains('menu-open') || forceClose) {
                 gsap.to(menuItems, { y: -20, opacity: 0, stagger: 0.1, duration: 0.3, ease: 'power2.in', onComplete: () => {
                     menu.classList.remove('menu-open');
                 }});
@@ -1136,6 +1136,13 @@
                 gsap.fromTo(menuItems, { y: -20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 0.3, ease: 'power2.out' });
             }
         }
+
+        // Close mobile menu when a menu item is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(item => {
+            item.addEventListener('click', () => {
+                toggleMobileMenu(true);
+            });
+        });
 
         // Custom Cursor & Mouse Gradient
         const cursor = document.querySelector('.custom-cursor');
