@@ -187,7 +187,9 @@
         }
         
         .skill-badge {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px) saturate(150%);
+            -webkit-backdrop-filter: blur(10px) saturate(150%);
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 10px 20px;
             border-radius: 12px;
@@ -642,6 +644,22 @@
             animation: shine 2s infinite;
         }
 
+        #mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #mobile-menu.menu-open {
+            display: flex;
+        }
+
+        .menu-item {
+            background-color: rgba(38, 38, 38, 0.6);
+            backdrop-filter: blur(30px);
+            border-radius: 12px;
+        }
+
         @media (max-width: 768px) {
             .hero-banner {
                 display: none !important;
@@ -686,6 +704,15 @@
                         <i data-feather="menu" class="w-6 h-6"></i>
                     </button>
                 </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden px-4">
+                <a href="#hero" class="text-gray-300 skill-badge shine">Home</a>
+                <a href="#about" class="text-gray-300 skill-badge shine">About</a>
+                <a href="#projects" class="text-gray-300 skill-badge shine">Projects</a>
+                <a href="#sponsor" class="text-gray-300 skill-badge shine">Sponsor</a>
+                <a href="#skills" class="text-gray-300 skill-badge shine">Skills</a>
+                <a href="#contact" class="text-gray-300 skill-badge shine">Contact</a>
             </div>
         </nav>
 
@@ -1053,6 +1080,20 @@
     <script>
         // Initialize Feather Icons
         feather.replace();
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const menuItems = menu.querySelectorAll('a');
+
+            if (menu.classList.contains('menu-open')) {
+                gsap.to(menuItems, { y: -20, opacity: 0, stagger: 0.1, duration: 0.3, ease: 'power2.in', onComplete: () => {
+                    menu.classList.remove('menu-open');
+                }});
+            } else {
+                menu.classList.add('menu-open');
+                gsap.fromTo(menuItems, { y: -20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 0.3, ease: 'power2.out' });
+            }
+        }
 
         // Custom Cursor & Mouse Gradient
         const cursor = document.querySelector('.custom-cursor');
