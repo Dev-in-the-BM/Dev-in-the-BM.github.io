@@ -1505,10 +1505,11 @@
                     scrub: 1,
                     pin: true,
                     onEnter: () => {
+                        gsap.to('#gradient-blob-container', { opacity: 0, duration: 1 });
                         gsap.to('.terminal', { scale: 1.02, duration: 0.5, ease: 'power2.out' });
                     },
                     onLeave: () => {
-                        gsap.to('#gradient-blob-container', { opacity: 1, duration: 2 });
+                        gsap.to('#gradient-blob-container', { opacity: 1, duration: 1 });
                         gsap.to('.terminal', { scale: 1, duration: 0.5 });
                     },
                     onEnterBack: () => {
@@ -1516,13 +1517,13 @@
                         gsap.to('.terminal', { scale: 1.02, duration: 0.5 });
                     },
                     onLeaveBack: () => {
+                        gsap.to('#gradient-blob-container', { opacity: 1, duration: 1 });
                         gsap.to('.terminal', { scale: 1, duration: 0.5 });
                     },
                 }
             });
 
             terminalTl.to("#hero", { opacity: 0, duration: 2 })
-              .to('#gradient-blob-container', { opacity: 0, duration: 2 }, "-=2")
               .from(".terminal", { opacity: 0, scale: 0.95, duration: 0.1 }, "-=1.9")
               .to("#line1-text", { text: "whoami", duration: 1.2, delay: 1, onComplete: scrollTerminal })
               .set("#line1 .blinking-cursor", { display: "none" })
