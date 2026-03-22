@@ -817,10 +817,13 @@
                     </div>
                 </div>
             </div>
-            <a href="#terminal-section" id="hero-arrow" class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-strong-bounce opacity-0">
-                <i data-feather="arrow-down" class="text-white w-8 h-8"></i>
+            <a href="#terminal-section" id="hero-arrow" class="!absolute z-20 flex flex-col items-center bottom-10 left-1/2 -translate-x-1/2 animate-strong-bounce opacity-0">
+                <div class="inline-flex items-center justify-center px-8 py-4 bg-zinc-900/10 backdrop-blur-md rounded-full border border-purple-500/30 shine relative z-10">
+                    <span class="text-lg font-semibold tracking-wider text-white">About</span>
+                </div>
+                <i data-feather="arrow-down" class="relative text-white w-10 h-10 opacity-70 z-5 mt-[-10px]"></i>
             </a>
-            <div class="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-black to-transparent md:hidden"></div>
+            <div class="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-black to-transparent md:hidden z-10"></div>
         </section>
 
         <!-- Terminal Section -->
@@ -896,7 +899,7 @@
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-20 px-4">
+        <section id="about" class="py-20 px-4 animate-on-scroll">
             <div class="max-w-7xl mx-auto">
                 <h2 class="text-5xl font-black text-center mb-12 reveal-text">
                     <span class="reveal-text-inner">
@@ -905,7 +908,7 @@
                 </h2>
                 <div class="grid md:grid-cols-2 gap-8 items-stretch">
                     <!-- Card 1: Yeshiva Bochur -->
-                    <div class="card ripple hover:scale-105 transition-transform duration-300 about-card animate-on-scroll h-full flex flex-col">
+                    <div class="card ripple hover:scale-105 transition-transform duration-300 about-card h-full flex flex-col">
                         <div class="flex items-start gap-4 h-full justify-between">
                             <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Top%20Hat.png" alt="Top Hat" width="40" height="40" class="inline-emoji morph-shape" />
                             <div class="flex-1 flex-grow">
@@ -916,7 +919,7 @@
                     </div>
 
                     <!-- Card 2: JTech Forums -->
-                    <div class="card ripple hover:scale-105 transition-transform duration-300 about-card animate-on-scroll h-full flex flex-col">
+                    <div class="card ripple hover:scale-105 transition-transform duration-300 about-card h-full flex flex-col">
                         <div class="flex items-start gap-4 h-full justify-between">
                             <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Left%20Speech%20Bubble.png" alt="Speech Bubble" width="40" height="40" class="inline-emoji morph-shape" />
                             <div class="flex-1 flex-grow">
@@ -927,7 +930,7 @@
                     </div>
 
                     <!-- Card 3: App Modder -->
-                    <div class="card ripple hover:scale-105 transition-transform duration-300 about-card animate-on-scroll h-full flex flex-col">
+                    <div class="card ripple hover:scale-105 transition-transform duration-300 about-card h-full flex flex-col">
                         <div class="flex items-start gap-4 h-full justify-between">
                             <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Hammer%20and%20Wrench.png" alt="Hammer and Wrench" width="40" height="40" class="inline-emoji morph-shape" />
                             <div class="flex-1 flex-grow">
@@ -938,7 +941,7 @@
                     </div>
 
                     <!-- Card 4: Linux Enthusiast -->
-                    <div class="card ripple hover:scale-105 transition-transform duration-300 about-card animate-on-scroll h-full flex flex-col">
+                    <div class="card ripple hover:scale-105 transition-transform duration-300 about-card h-full flex flex-col">
                         <div class="flex items-start gap-4 h-full justify-between">
                             <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Penguin.png" alt="Penguin" width="40" height="40" class="inline-emoji morph-shape" />
                             <div class="flex-1 flex-grow">
@@ -1605,113 +1608,112 @@
               .to(".terminal", {
                   opacity: 0,
                   scale: 0.95,
-                  duration: 2,
-                  onComplete: () => {
-                    // Animate sections after terminal - STAGGERED REVEALS
-                    sectionsToAnimate.forEach((section, index) => {
-                        gsap.fromTo(section,
-                            { opacity: 0, y: 80 },
-                            {
-                                opacity: 1,
-                                y: 0,
-                                duration: 1.2,
-                                ease: 'power3.out',
-                                scrollTrigger: {
-                                    trigger: section,
-                                    start: 'top 80%',
-                                    toggleActions: 'play none none reset'
-                                }
-                            }
-                        );
-
-                        // Animate children elements with stagger
-                        const items = section.querySelectorAll('.about-item, .focus-item, .sponsor-card, .stat-card, .tool-badge');
-                        if (items.length > 0) {
-                            gsap.fromTo(items,
-                                { 
-                                    opacity: 0, 
-                                    y: 40,
-                                    scale: 0.95
-                                },
-                                {
-                                    opacity: 1,
-                                    y: 0,
-                                    scale: 1,
-                                    duration: 0.8,
-                                    stagger: {
-                                        each: 0.1,
-                                        from: 'start'
-                                    },
-                                    ease: 'back.out(1.4)',
-                                    scrollTrigger: {
-                                        trigger: section,
-                                        start: 'top 70%',
-                                        toggleActions: 'play none none reset'
-                                    }
-                                }
-                            );
-                        }
-                    });
-
-                    // Animate reveal text headers
-                    document.querySelectorAll('.reveal-text-inner').forEach(el => {
-                        gsap.fromTo(el,
-                            { 
-                                y: 60,
-                                opacity: 0
-                            },
-                            {
-                                y: 0,
-                                opacity: 1,
-                                duration: 1,
-                                ease: 'power3.out',
-                                scrollTrigger: {
-                                    trigger: el,
-                                    start: 'top 85%',
-                                    toggleActions: 'play none none reset'
-                                }
-                            }
-                        );
-                    });
-
-                    // Parallax effects on different elements
-                    gsap.utils.toArray('.parallax-slow').forEach(el => {
-                        gsap.to(el, {
-                            y: 50,
-                            scrollTrigger: {
-                                trigger: el,
-                                start: 'top bottom',
-                                end: 'bottom top',
-                                scrub: 1.5
-                            }
-                        });
-                    });
-
-                    gsap.utils.toArray('.parallax-medium').forEach(el => {
-                        gsap.to(el, {
-                            y: 100,
-                            scrollTrigger: {
-                                trigger: el,
-                                start: 'top bottom',
-                                end: 'bottom top',
-                                scrub: 1
-                            }
-                        });
-                    });
-
-                    gsap.utils.toArray('.parallax-fast').forEach(el => {
-                        gsap.to(el, {
-                            y: 150,
-                            scrollTrigger: {
-                                trigger: el,
-                                start: 'top bottom',
-                                end: 'bottom top',
-                                scrub: 0.5
-                            }
-                        });
-                    });
-                  }
+                  duration: 2
               });
+
+            // Animate sections after terminal - STAGGERED REVEALS
+            sectionsToAnimate.forEach((section, index) => {
+                gsap.fromTo(section,
+                    { opacity: 0, y: 80 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1.2,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top 80%',
+                            toggleActions: 'play none none reset'
+                        }
+                    }
+                );
+
+                // Animate children elements with stagger
+                const items = section.querySelectorAll('.about-card, .project-card, .sponsor-card, .skill-badge');
+                if (items.length > 0) {
+                    gsap.fromTo(items,
+                        { 
+                            opacity: 0, 
+                            y: 40,
+                            scale: 0.95
+                        },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.8,
+                            stagger: {
+                                each: 0.1,
+                                from: 'start'
+                            },
+                            ease: 'back.out(1.4)',
+                            scrollTrigger: {
+                                trigger: section,
+                                start: 'top 70%',
+                                toggleActions: 'play none none reset'
+                            }
+                        }
+                    );
+                }
+            });
+
+            // Animate reveal text headers
+            document.querySelectorAll('.reveal-text-inner').forEach(el => {
+                gsap.fromTo(el,
+                    { 
+                        y: 60,
+                        opacity: 0
+                    },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 1,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: el,
+                            start: 'top 85%',
+                            toggleActions: 'play none none reset'
+                        }
+                    }
+                );
+            });
+
+            // Parallax effects on different elements
+            gsap.utils.toArray('.parallax-slow').forEach(el => {
+                gsap.to(el, {
+                    y: 50,
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: 1.5
+                    }
+                });
+            });
+
+            gsap.utils.toArray('.parallax-medium').forEach(el => {
+                gsap.to(el, {
+                    y: 100,
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: 1
+                    }
+                });
+            });
+
+            gsap.utils.toArray('.parallax-fast').forEach(el => {
+                gsap.to(el, {
+                    y: 150,
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: 0.5
+                    }
+                });
+            });
         });
     </script>
 </body>
