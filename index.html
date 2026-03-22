@@ -97,7 +97,10 @@
 
         body.terminal-hover .custom-cursor,
         body.terminal-hover .cursor-follower,
-        body.terminal-hover .cursor-trail {
+        body.terminal-hover .cursor-trail,
+        body.popup-hover .custom-cursor,
+        body.popup-hover .cursor-follower,
+        body.popup-hover .cursor-trail {
             display: none;
         }
         
@@ -442,18 +445,18 @@
         
         @keyframes arrow-drop {
             0% {
-                transform: translate(-50%, -15px);
+                transform: translate(-50%, -40px);
                 opacity: 0;
             }
             15% {
                 opacity: 0.8;
             }
             70% {
-                transform: translate(-50%, 65px);
+                transform: translate(-50%, 80px);
                 opacity: 0;
             }
             100% {
-                transform: translate(-50%, 65px);
+                transform: translate(-50%, 80px);
                 opacity: 0;
             }
         }
@@ -1274,26 +1277,42 @@
         // Create Toast Element
         const androidToast = document.createElement('div');
         androidToast.id = 'android-toast';
-        androidToast.className = 'fixed bottom-32 left-1/2 -translate-x-1/2 bg-[#313033] text-[#f4eff4] px-6 py-3 rounded-full text-sm shadow-xl opacity-0 pointer-events-none transition-opacity duration-300 z-[9999] tracking-wide whitespace-nowrap';
+        androidToast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#313033] text-[#f4eff4] px-6 py-3 rounded-full text-sm shadow-xl opacity-0 pointer-events-none transition-opacity duration-300 z-[9999] tracking-wide whitespace-nowrap';
         document.body.appendChild(androidToast);
 
         let hoverTimer;
+        let hideTimer;
+        let isPopupVisible = false;
         let clickCount = 0;
         let toastTimeout;
         let isDeveloper = false;
 
         heroArrow.addEventListener('mouseenter', () => {
-            hoverTimer = setTimeout(() => {
-                aboutPopup.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
-                aboutPopup.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
-            }, 1000);
+            clearTimeout(hideTimer);
+            if (!isPopupVisible) {
+                hoverTimer = setTimeout(() => {
+                    aboutPopup.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+                    aboutPopup.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+                    isPopupVisible = true;
+                }, 1000);
+            }
         });
 
         heroArrow.addEventListener('mouseleave', () => {
             clearTimeout(hoverTimer);
-            aboutPopup.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
-            aboutPopup.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
-            clickCount = 0; 
+            hideTimer = setTimeout(() => {
+                aboutPopup.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+                aboutPopup.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+                isPopupVisible = false;
+                clickCount = 0; 
+            }, 400); // Gives time to cross the gap between the button and popup
+        });
+
+        aboutPopup.addEventListener('mouseenter', () => {
+            document.body.classList.add('popup-hover');
+        });
+        aboutPopup.addEventListener('mouseleave', () => {
+            document.body.classList.remove('popup-hover');
         });
 
         aboutPopup.addEventListener('click', (e) => {
@@ -1322,7 +1341,7 @@
             clickCount++;
             const tapsRemaining = 7 - clickCount;
             
-            if (tapsRemaining > 0 && tapsRemaining <= 3) {
+            if (tapsRemaining > 0 && tapsRemaining <= 4) {
                 showToast(`You are now ${tapsRemaining} steps away from being a developer.`);
             } else if (tapsRemaining === 0) {
                 isDeveloper = true;
