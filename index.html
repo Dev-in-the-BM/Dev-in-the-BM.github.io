@@ -781,7 +781,7 @@
         <!-- Hero Section -->
         <section id="hero" class="hero-section relative h-screen flex items-center justify-center overflow-hidden">
             <div class="absolute inset-0 z-0">
-                <div class="hero-banner parallax-slow w-full h-[120%] bg-cover bg-center" style="background-image: url(https://github.com/Dev-in-the-BM/Dev-in-the-BM/blob/main/banner.png?raw=true)"></div>
+                <div class="hero-banner parallax-slow w-full h-[120%] bg-cover bg-center" style="background-image: url(https://github.com/Dev-in-the-BM/Dev-in-the-BM/blob/main/Assets/banner-min.webp?raw=true)"></div>
                 <div class="absolute inset-0 bg-black opacity-50"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
             </div>
@@ -825,6 +825,34 @@
                 </div>
             </div>
             <a href="#terminal-section" id="hero-arrow" class="!absolute z-20 flex flex-col items-center w-fit opacity-0" style="bottom: -35px; left: 50%; transform: translateX(-50%);">
+                
+                <!-- Android Settings Popup -->
+                <div id="about-popup" class="absolute bottom-full mb-4 w-[340px] bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 pointer-events-none transition-all duration-300 transform scale-95 origin-bottom z-30 font-sans text-left cursor-default flex flex-col overflow-hidden">
+                    <!-- Header -->
+                    <div class="flex items-center justify-between px-5 py-4 bg-white border-b border-gray-100">
+                        <div class="flex items-center">
+                            <i data-feather="arrow-left" class="text-gray-700 w-6 h-6 mr-6"></i>
+                            <h3 class="text-gray-900 font-normal text-xl">About phone</h3>
+                        </div>
+                        <i data-feather="search" class="text-gray-700 w-5 h-5"></i>
+                    </div>
+                    <!-- Content -->
+                    <div class="flex flex-col py-2">
+                        <div class="px-5 py-4 hover:bg-gray-100 transition-colors cursor-pointer">
+                            <div class="text-gray-900 text-base font-normal mb-1">Android version</div>
+                            <div class="text-gray-600 text-sm">12</div>
+                        </div>
+                        <div class="px-5 py-4 hover:bg-gray-100 transition-colors cursor-pointer">
+                            <div class="text-gray-900 text-base font-normal mb-1">Kernel version</div>
+                            <div class="text-gray-600 text-sm leading-snug">4.14.170-g235889708<br>#1 Thu Oct 9 05:37:13 UTC 2023</div>
+                        </div>
+                        <div id="build-number-item" class="px-5 py-4 hover:bg-gray-100 transition-colors cursor-pointer transition-all duration-150">
+                            <div class="text-gray-900 text-base font-normal mb-1">Build number</div>
+                            <div class="text-gray-600 text-sm leading-snug break-words">AOSP++ aosp_crosshatch-userdebug 12<br>SP1A.210812.016.C1 eng.gary.20220526.154443 test-keys</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="inline-flex items-center justify-center px-10 pt-5 pb-14 bg-zinc-900/10 backdrop-blur-md rounded-[3rem] border border-purple-500/30 shine relative z-10">
                     <span class="text-lg font-semibold tracking-wider text-white">About</span>
                 </div>
@@ -1236,6 +1264,75 @@
 
         terminal.addEventListener('mouseleave', () => {
             document.body.classList.remove('terminal-hover');
+        });
+
+        // Android Settings Popup Logic
+        const heroArrow = document.getElementById('hero-arrow');
+        const aboutPopup = document.getElementById('about-popup');
+        const buildNumberItem = document.getElementById('build-number-item');
+        
+        // Create Toast Element
+        const androidToast = document.createElement('div');
+        androidToast.id = 'android-toast';
+        androidToast.className = 'fixed bottom-32 left-1/2 -translate-x-1/2 bg-[#313033] text-[#f4eff4] px-6 py-3 rounded-full text-sm shadow-xl opacity-0 pointer-events-none transition-opacity duration-300 z-[9999] tracking-wide whitespace-nowrap';
+        document.body.appendChild(androidToast);
+
+        let hoverTimer;
+        let clickCount = 0;
+        let toastTimeout;
+        let isDeveloper = false;
+
+        heroArrow.addEventListener('mouseenter', () => {
+            hoverTimer = setTimeout(() => {
+                aboutPopup.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+                aboutPopup.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+            }, 1000);
+        });
+
+        heroArrow.addEventListener('mouseleave', () => {
+            clearTimeout(hoverTimer);
+            aboutPopup.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+            aboutPopup.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+            clickCount = 0; 
+        });
+
+        aboutPopup.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        function showToast(message) {
+            androidToast.textContent = message;
+            androidToast.classList.remove('opacity-0');
+            androidToast.classList.add('opacity-100');
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                androidToast.classList.remove('opacity-100');
+                androidToast.classList.add('opacity-0');
+            }, 2000);
+        }
+
+        buildNumberItem.addEventListener('click', (e) => {
+            if (isDeveloper) {
+                showToast("No need, you are already a developer.");
+                return;
+            }
+            
+            clickCount++;
+            const tapsRemaining = 7 - clickCount;
+            
+            if (tapsRemaining > 0 && tapsRemaining <= 3) {
+                showToast(`You are now ${tapsRemaining} steps away from being a developer.`);
+            } else if (tapsRemaining === 0) {
+                isDeveloper = true;
+                showToast("You are now a developer!");
+            }
+            
+            buildNumberItem.classList.add('bg-gray-200');
+            setTimeout(() => {
+                buildNumberItem.classList.remove('bg-gray-200');
+            }, 150);
         });
 
         // Ripple effect on cards
