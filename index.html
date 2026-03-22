@@ -827,7 +827,7 @@
                     </div>
                 </div>
             </div>
-            <a href="#terminal-section" id="hero-arrow" class="!absolute z-20 flex flex-col items-center w-fit opacity-0" style="bottom: -35px; left: 50%; transform: translateX(-50%);">
+            <a href="#about" id="hero-arrow" class="!absolute z-20 flex flex-col items-center w-fit opacity-0" style="bottom: -35px; left: 50%; transform: translateX(-50%);">
                 
                 <!-- Android Settings Popup -->
                 <div id="about-popup" class="absolute bottom-full mb-4 w-[340px] bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 pointer-events-none transition-all duration-300 transform scale-95 origin-bottom z-30 font-sans text-left cursor-default flex flex-col overflow-hidden">
@@ -865,7 +865,7 @@
         </section>
 
         <!-- Terminal Section -->
-        <section id="terminal-section" class="min-h-screen flex items-center justify-center px-4">
+        <section id="terminal-section" class="min-h-screen flex items-center justify-center px-4" style="display: none;">
             <div class="terminal max-w-3xl mx-auto w-full">
                 <div class="terminal-header">
                     <div class="absolute left-1/2 transform -translate-x-1/2 text-white font-bold text-sm">Terminal</div>
@@ -1346,6 +1346,18 @@
             } else if (tapsRemaining === 0) {
                 isDeveloper = true;
                 showToast("You are now a developer!");
+                
+                const terminalSection = document.getElementById('terminal-section');
+                if (terminalSection) terminalSection.style.display = 'flex';
+                
+                document.getElementById('hero-arrow').setAttribute('href', '#terminal-section');
+                document.querySelectorAll('a[href="#about"]').forEach(link => {
+                    link.setAttribute('href', '#terminal-section');
+                });
+                
+                if (typeof window.initTerminalAnimation === 'function') {
+                    window.initTerminalAnimation();
+                }
             }
             
             buildNumberItem.classList.add('bg-gray-200');
@@ -1436,11 +1448,22 @@
                     if (targetId === '#terminal-section') {
                         // Special handling for terminal due to pinning
                         const terminalTrigger = ScrollTrigger.getById("terminalPin");
-                        gsap.to(window, {
-                            scrollTo: { y: terminalTrigger.start + 100, autoKill: false },
-                            duration: 1.5,
-                            ease: 'power3.inOut'
-                        });
+                        if (terminalTrigger) {
+                            gsap.to(window, {
+                                scrollTo: { y: terminalTrigger.start + 100, autoKill: false },
+                                duration: 1.5,
+                                ease: 'power3.inOut'
+                            });
+                        } else {
+                            const target = document.querySelector(targetId);
+                            if (target) {
+                                gsap.to(window, {
+                                    scrollTo: { y: target, offsetY: 80 },
+                                    duration: 1,
+                                    ease: 'power3.inOut'
+                                });
+                            }
+                        }
                     } else if (target) {
                         gsap.to(window, {
                             scrollTo: { y: target, offsetY: 80 },
@@ -1647,92 +1670,96 @@
             gsap.set(sectionsToAnimate, { opacity: 0 });
 
             // Enhanced terminal timeline
-            const terminalTl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: "#terminal-section",
-                    id: "terminalPin", // Add an ID for easy reference
-                    start: "top top",
-                    end: "+=8000",
-                    scrub: 1,
-                    pin: true,
-                    onEnter: () => {
-                        gsap.to('#gradient-blob-container', { opacity: 0, duration: 1 });
-                        gsap.to('.terminal', { scale: 1.02, duration: 0.5, ease: 'power2.out' });
-                    },
-                    onLeave: () => {
-                        gsap.to('#gradient-blob-container', { opacity: 1, duration: 1 });
-                        gsap.to('.terminal', { scale: 1, duration: 0.5 });
-                    },
-                    onEnterBack: () => {
-                        gsap.to('#gradient-blob-container', { opacity: 0, duration: 1 });
-                        gsap.to('.terminal', { scale: 1.02, duration: 0.5 });
-                    },
-                    onLeaveBack: () => {
-                        gsap.to('#gradient-blob-container', { opacity: 1, duration: 1 });
-                        gsap.to('.terminal', { scale: 1, duration: 0.5 });
-                    },
-                }
-            });
+            window.initTerminalAnimation = function() {
+                const terminalTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: "#terminal-section",
+                        id: "terminalPin", // Add an ID for easy reference
+                        start: "top top",
+                        end: "+=8000",
+                        scrub: 1,
+                        pin: true,
+                        onEnter: () => {
+                            gsap.to('#gradient-blob-container', { opacity: 0, duration: 1 });
+                            gsap.to('.terminal', { scale: 1.02, duration: 0.5, ease: 'power2.out' });
+                        },
+                        onLeave: () => {
+                            gsap.to('#gradient-blob-container', { opacity: 1, duration: 1 });
+                            gsap.to('.terminal', { scale: 1, duration: 0.5 });
+                        },
+                        onEnterBack: () => {
+                            gsap.to('#gradient-blob-container', { opacity: 0, duration: 1 });
+                            gsap.to('.terminal', { scale: 1.02, duration: 0.5 });
+                        },
+                        onLeaveBack: () => {
+                            gsap.to('#gradient-blob-container', { opacity: 1, duration: 1 });
+                            gsap.to('.terminal', { scale: 1, duration: 0.5 });
+                        },
+                    }
+                });
 
-            terminalTl.to("#hero", { opacity: 0, duration: 2 })
-              .from(".terminal", { opacity: 0, scale: 0.95, duration: 0.1 }, "-=1.9")
-              .to("#line1-text", { text: "whoami", duration: 1.2, delay: 1, onComplete: scrollTerminal })
-              .set("#line1 .blinking-cursor", { display: "none" })
-              .set("#line2", { display: "block", text: "dev-in-the-bm", onComplete: scrollTerminal })
-              .set("#line3", { display: "block", onComplete: scrollTerminal })
-              .to("#line3-text", { text: "cat ~/status.txt", duration: 3.2, delay: 2, onComplete: scrollTerminal })
-              .set("#line3 .blinking-cursor", { display: "none" })
-              .set("#line4", { display: "block", text: "Actively contributing to JTech Forums and modding apps for flip phones.", onComplete: scrollTerminal })
-              .set("#line5", { display: "block", onComplete: scrollTerminal })
-              .to("#line5-text", { text: "ls -l ~/projects", duration: 3.4, delay: 2, onComplete: scrollTerminal })
-              .set("#line5 .blinking-cursor", { display: "none" })
-              .set("#line6", {
-                  display: "block",
-                  innerHTML: `<pre>\n-rw-r--r-- 1 dev-in-the-bm root 1.2K Oct 21 10:00 JDate-GNOME-Extension\n-rw-r--r-- 1 dev-in-the-bm root 3.4M Oct 20 14:30 Crescent-Remixer\n</pre>`,
-                  onComplete: scrollTerminal
-              })
-              .set("#line7", { display: "block", onComplete: scrollTerminal })
-              .to("#line7-text", { text: "hostnamectl", duration: 2, delay: 2, onComplete: scrollTerminal })
-              .set("#line7 .blinking-cursor", { display: "none" })
-              .set("#line8", {
-                  display: "block",
-                  innerHTML: `<pre>   Static hostname: yeshiva-node\n         Icon name: computer-laptop\n           Chassis: portable\n        Machine ID: 770613b21\n           Location: ~/beis-medrash\n             Locale: en_US.UTF-8\n             Region: new-york/monsey</pre>`,
-                  onComplete: scrollTerminal
-              })
-              .set("#line9", { display: "block", onComplete: scrollTerminal })
-              .to("#line9-text", { text: "ps aux | grep tools", duration: 3, delay: 2, onComplete: scrollTerminal })
-              .set("#line9 .blinking-cursor", { display: "none" })
-              .set("#line10", {
-                  display: "block",
-                  innerHTML: `<pre>USER       PID  %CPU %MEM   VSZ   RSS TTY      STAT START   TIME COMMAND\nnaftali   2174   3.8  1.2  412000 21000 ?       Sl   Oct20   11:25 /usr/bin/wave-terminal --session=dev\nnaftali   3041  11.0  4.5 1012000 92000 ?       Sl   Oct20   14:47 /usr/bin/Code --unity-launch\nnaftali   3678   2.5  0.9  580000 16000 ?       Sl   Oct20    8:02 /usr/bin/zen-browser --profile=naftali</pre>`,
-                  onComplete: scrollTerminal
-              })
-              .set("#line11", { display: "block", onComplete: scrollTerminal })
-              .to("#line11-text", { text: "id -nG", duration: 1.5, delay: 2, onComplete: scrollTerminal })
-              .set("#line11 .blinking-cursor", { display: "none" })
-              .set("#line12", { display: "block", text: "dev-in-the-bm shmuztech jtech", onComplete: scrollTerminal })
-              .set("#line13", { display: "block", onComplete: scrollTerminal })
-              .to("#line13-text", { text: "man life", duration: 1.5, delay: 2, onComplete: scrollTerminal })
-              .set("#line13 .blinking-cursor", { display: "none" })
-              .set("#line14", {
-                  display: "block",
-                  innerHTML: `<pre>No manual entry for life\n\nTry these related manuals:\n  man gadgets\n  man tech\n  man linux\n\nTo create a manual page: <code>mkdir -p ~/man/man1 && echo ".TH life 1". > ~/man/man1/life.1 && man -M ~/man life</code></pre>`,
-                  onComplete: scrollTerminal
-              })
-              .set("#line15", { display: "block", onComplete: scrollTerminal })
-              .to("#line15-text", { text: "sudo apt install sleep", duration: 3, delay: 2, onComplete: scrollTerminal })
-              .set("#line15 .blinking-cursor", { display: "none" })
-              .set("#line16", { display: "block", text: "Error: Unable to locate package sleep", onComplete: scrollTerminal })
-              .set("#line17", { display: "block", onComplete: scrollTerminal })
-              .to("#line17-text", { text: "sudo get-chocolate", duration: 3, delay: 2, onComplete: scrollTerminal })
-              .set("#line17 .blinking-cursor", { display: "none" })
-              .set("#line18", { display: "block", text: "Permission denied: chocolate supply depleted. Try: sudo buy-chocolate", onComplete: scrollTerminal })
-              .set({}, {}, "+=6")
-              .to(".terminal", {
-                  opacity: 0,
-                  scale: 0.95,
-                  duration: 2
-              });
+                terminalTl.to("#hero", { opacity: 0, duration: 2 })
+                  .from(".terminal", { opacity: 0, scale: 0.95, duration: 0.1 }, "-=1.9")
+                  .to("#line1-text", { text: "whoami", duration: 1.2, delay: 1, onComplete: scrollTerminal })
+                  .set("#line1 .blinking-cursor", { display: "none" })
+                  .set("#line2", { display: "block", text: "dev-in-the-bm", onComplete: scrollTerminal })
+                  .set("#line3", { display: "block", onComplete: scrollTerminal })
+                  .to("#line3-text", { text: "cat ~/status.txt", duration: 3.2, delay: 2, onComplete: scrollTerminal })
+                  .set("#line3 .blinking-cursor", { display: "none" })
+                  .set("#line4", { display: "block", text: "Actively contributing to JTech Forums and modding apps for flip phones.", onComplete: scrollTerminal })
+                  .set("#line5", { display: "block", onComplete: scrollTerminal })
+                  .to("#line5-text", { text: "ls -l ~/projects", duration: 3.4, delay: 2, onComplete: scrollTerminal })
+                  .set("#line5 .blinking-cursor", { display: "none" })
+                  .set("#line6", {
+                      display: "block",
+                      innerHTML: `<pre>\n-rw-r--r-- 1 dev-in-the-bm root 1.2K Oct 21 10:00 JDate-GNOME-Extension\n-rw-r--r-- 1 dev-in-the-bm root 3.4M Oct 20 14:30 Crescent-Remixer\n</pre>`,
+                      onComplete: scrollTerminal
+                  })
+                  .set("#line7", { display: "block", onComplete: scrollTerminal })
+                  .to("#line7-text", { text: "hostnamectl", duration: 2, delay: 2, onComplete: scrollTerminal })
+                  .set("#line7 .blinking-cursor", { display: "none" })
+                  .set("#line8", {
+                      display: "block",
+                      innerHTML: `<pre>   Static hostname: yeshiva-node\n         Icon name: computer-laptop\n           Chassis: portable\n        Machine ID: 770613b21\n           Location: ~/beis-medrash\n             Locale: en_US.UTF-8\n             Region: new-york/monsey</pre>`,
+                      onComplete: scrollTerminal
+                  })
+                  .set("#line9", { display: "block", onComplete: scrollTerminal })
+                  .to("#line9-text", { text: "ps aux | grep tools", duration: 3, delay: 2, onComplete: scrollTerminal })
+                  .set("#line9 .blinking-cursor", { display: "none" })
+                  .set("#line10", {
+                      display: "block",
+                      innerHTML: `<pre>USER       PID  %CPU %MEM   VSZ   RSS TTY      STAT START   TIME COMMAND\nnaftali   2174   3.8  1.2  412000 21000 ?       Sl   Oct20   11:25 /usr/bin/wave-terminal --session=dev\nnaftali   3041  11.0  4.5 1012000 92000 ?       Sl   Oct20   14:47 /usr/bin/Code --unity-launch\nnaftali   3678   2.5  0.9  580000 16000 ?       Sl   Oct20    8:02 /usr/bin/zen-browser --profile=naftali</pre>`,
+                      onComplete: scrollTerminal
+                  })
+                  .set("#line11", { display: "block", onComplete: scrollTerminal })
+                  .to("#line11-text", { text: "id -nG", duration: 1.5, delay: 2, onComplete: scrollTerminal })
+                  .set("#line11 .blinking-cursor", { display: "none" })
+                  .set("#line12", { display: "block", text: "dev-in-the-bm shmuztech jtech", onComplete: scrollTerminal })
+                  .set("#line13", { display: "block", onComplete: scrollTerminal })
+                  .to("#line13-text", { text: "man life", duration: 1.5, delay: 2, onComplete: scrollTerminal })
+                  .set("#line13 .blinking-cursor", { display: "none" })
+                  .set("#line14", {
+                      display: "block",
+                      innerHTML: `<pre>No manual entry for life\n\nTry these related manuals:\n  man gadgets\n  man tech\n  man linux\n\nTo create a manual page: <code>mkdir -p ~/man/man1 && echo ".TH life 1". > ~/man/man1/life.1 && man -M ~/man life</code></pre>`,
+                      onComplete: scrollTerminal
+                  })
+                  .set("#line15", { display: "block", onComplete: scrollTerminal })
+                  .to("#line15-text", { text: "sudo apt install sleep", duration: 3, delay: 2, onComplete: scrollTerminal })
+                  .set("#line15 .blinking-cursor", { display: "none" })
+                  .set("#line16", { display: "block", text: "Error: Unable to locate package sleep", onComplete: scrollTerminal })
+                  .set("#line17", { display: "block", onComplete: scrollTerminal })
+                  .to("#line17-text", { text: "sudo get-chocolate", duration: 3, delay: 2, onComplete: scrollTerminal })
+                  .set("#line17 .blinking-cursor", { display: "none" })
+                  .set("#line18", { display: "block", text: "Permission denied: chocolate supply depleted. Try: sudo buy-chocolate", onComplete: scrollTerminal })
+                  .set({}, {}, "+=6")
+                  .to(".terminal", {
+                      opacity: 0,
+                      scale: 0.95,
+                      duration: 2
+                  });
+                  
+                ScrollTrigger.refresh();
+            };
 
             // Animate sections after terminal - STAGGERED REVEALS
             sectionsToAnimate.forEach((section, index) => {
