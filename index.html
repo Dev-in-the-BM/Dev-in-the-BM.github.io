@@ -440,18 +440,25 @@
             60% { transform: translateY(-5px); }
         }
         
-        @keyframes strong-bounce {
-            0%, 100% {
-                transform: translateY(-45%);
-                animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+        @keyframes arrow-drop {
+            0% {
+                transform: translate(-50%, -15px);
+                opacity: 0;
             }
-            50% {
-                transform: translateY(0);
-                animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+            15% {
+                opacity: 0.8;
+            }
+            70% {
+                transform: translate(-50%, 65px);
+                opacity: 0;
+            }
+            100% {
+                transform: translate(-50%, 65px);
+                opacity: 0;
             }
         }
-        .animate-strong-bounce {
-            animation: strong-bounce 1s infinite;
+        .animate-arrow-drop {
+            animation: arrow-drop 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
 
         .scroll-indicator {
@@ -817,11 +824,11 @@
                     </div>
                 </div>
             </div>
-            <a href="#terminal-section" id="hero-arrow" class="!absolute z-20 flex flex-col items-center bottom-10 left-1/2 -translate-x-1/2 animate-strong-bounce opacity-0">
-                <div class="inline-flex items-center justify-center px-8 py-4 bg-zinc-900/10 backdrop-blur-md rounded-full border border-purple-500/30 shine relative z-10">
+            <a href="#terminal-section" id="hero-arrow" class="!absolute z-20 flex flex-col items-center w-fit opacity-0" style="bottom: -35px; left: 50%; transform: translateX(-50%);">
+                <div class="inline-flex items-center justify-center px-10 pt-5 pb-14 bg-zinc-900/10 backdrop-blur-md rounded-[3rem] border border-purple-500/30 shine relative z-10">
                     <span class="text-lg font-semibold tracking-wider text-white">About</span>
                 </div>
-                <i data-feather="arrow-down" class="relative text-white w-10 h-10 opacity-70 z-5 mt-[-10px]"></i>
+                <i data-feather="arrow-down" class="absolute text-white w-10 h-10 animate-arrow-drop z-20" style="left: 50%; top: 15px;"></i>
             </a>
             <div class="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-black to-transparent md:hidden z-10"></div>
         </section>
