@@ -750,7 +750,7 @@
     <div id="main-container">
         <div class="custom-cursor"></div>
         <div class="cursor-follower"></div>
-        <div id="mouse-gradient" class="absolute w-96 h-96 rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(147, 51, 234, 0.3) 0%, transparent 70%); transition: all 0.3s ease-out;"></div>
+        <div id="mouse-gradient" class="absolute w-96 h-96 rounded-full pointer-events-none opacity-0" style="background: radial-gradient(circle, rgba(147, 51, 234, 0.3) 0%, transparent 70%); transition: top 0.3s ease-out, left 0.3s ease-out;"></div>
         
         <!-- Navigation -->
         <nav class="fixed top-0 w-full bg-black bg-opacity-20 backdrop-filter backdrop-blur-xl z-50 border-b border-white border-opacity-10">
@@ -783,10 +783,12 @@
 
         <!-- Hero Section -->
         <section id="hero" class="hero-section relative h-screen flex items-center justify-center overflow-hidden">
-            <div class="absolute inset-0 z-0">
+            <!-- Soft mask at the bottom to eliminate hard edges on scroll -->
+            <div class="absolute inset-0 z-0" style="-webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%); mask-image: linear-gradient(to bottom, black 50%, transparent 100%);">
                 <div class="hero-banner parallax-slow w-full h-[120%] bg-cover bg-center" style="background-image: url(https://github.com/Dev-in-the-BM/Dev-in-the-BM/blob/main/Assets/banner-min.webp?raw=true)"></div>
                 <div class="absolute inset-0 bg-black opacity-50"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                <div class="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-black to-transparent md:hidden"></div>
             </div>
             <div class="relative z-10 text-center space-y-8 px-4">
                 <div>
@@ -861,7 +863,6 @@
                 </div>
                 <i data-feather="arrow-down" class="absolute text-white w-10 h-10 animate-arrow-drop z-20" style="left: 50%; top: 15px;"></i>
             </a>
-            <div class="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-black to-transparent md:hidden z-10"></div>
         </section>
 
         <!-- Terminal Section -->
@@ -1294,7 +1295,7 @@
                     aboutPopup.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
                     aboutPopup.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
                     isPopupVisible = true;
-                }, 1000);
+                }, 2000); // Changed from 1000ms to 2000ms
             }
         });
 
@@ -1545,11 +1546,7 @@
             // Parallax effect on hero banner
             // Enhanced gradient blob animations
             const blobContainer = document.getElementById('gradient-blob-container');
-            if (window.matchMedia("(max-width: 768px)").matches) {
-                gsap.set(blobContainer, { opacity: 1 });
-            } else {
-                gsap.set(blobContainer, { opacity: 0 });
-            }
+            gsap.set(blobContainer, { opacity: 0 });
 
             ScrollTrigger.matchMedia({
                 "(min-width: 769px)": function() {
@@ -1680,19 +1677,15 @@
                         scrub: 1,
                         pin: true,
                         onEnter: () => {
-                            gsap.to('#gradient-blob-container', { opacity: 0, duration: 1 });
                             gsap.to('.terminal', { scale: 1.02, duration: 0.5, ease: 'power2.out' });
                         },
                         onLeave: () => {
-                            gsap.to('#gradient-blob-container', { opacity: 1, duration: 1 });
                             gsap.to('.terminal', { scale: 1, duration: 0.5 });
                         },
                         onEnterBack: () => {
-                            gsap.to('#gradient-blob-container', { opacity: 0, duration: 1 });
                             gsap.to('.terminal', { scale: 1.02, duration: 0.5 });
                         },
                         onLeaveBack: () => {
-                            gsap.to('#gradient-blob-container', { opacity: 1, duration: 1 });
                             gsap.to('.terminal', { scale: 1, duration: 0.5 });
                         },
                     }
@@ -1760,6 +1753,19 @@
                   
                 ScrollTrigger.refresh();
             };
+
+            // Seamless crossfade: blobs fade in and hero fades out simultaneously tied perfectly to the scroll
+            const crossfadeTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '#about',
+                    start: 'top 100%',
+                    end: 'top 10%',
+                    scrub: true
+                }
+            });
+            crossfadeTl.fromTo('#gradient-blob-container', { opacity: 0 }, { opacity: 1, ease: 'power1.inOut' }, 0)
+                       .fromTo('#mouse-gradient', { opacity: 0 }, { opacity: 1, ease: 'power1.inOut' }, 0)
+                       .to('#hero .absolute.inset-0.z-0', { opacity: 0, ease: 'power1.inOut' }, 0);
 
             // Animate sections after terminal - STAGGERED REVEALS
             sectionsToAnimate.forEach((section, index) => {
