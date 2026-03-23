@@ -865,9 +865,9 @@
         </section>
 
         <!-- Terminal Section -->
-        <section id="terminal-section" class="min-h-screen flex items-center justify-center px-4" style="display: none;">
+        <section id="terminal-section" class="relative min-h-screen flex items-center justify-center px-4" style="display: none;">
             <!-- Dedicated masked background layer to prevent leaks but blend smoothly -->
-            <div class="absolute inset-0 z-0 bg-black" style="-webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%); mask-image: linear-gradient(to bottom, black 85%, transparent 100%);"></div>
+            <div class="absolute inset-0 z-0 bg-black" style="-webkit-mask-image: linear-gradient(to bottom, black calc(50% + 230px), transparent 100%); mask-image: linear-gradient(to bottom, black calc(50% + 230px), transparent 100%);"></div>
             <div class="terminal max-w-3xl mx-auto w-full relative z-10">
                 <div class="terminal-header">
                     <div class="absolute left-1/2 transform -translate-x-1/2 text-white font-bold text-sm">Terminal</div>
@@ -1677,6 +1677,7 @@
                         end: "+=8000",
                         scrub: 1,
                         pin: true,
+                        refreshPriority: 1, // Ensures this pin calculates its 8000px spacer before downstream sections calculate their start positions
                         onEnter: () => {
                             gsap.to('.terminal', { scale: 1.02, duration: 0.5, ease: 'power2.out' });
                         },
@@ -1767,7 +1768,8 @@
             });
             crossfadeTl.fromTo('#gradient-blob-container', { opacity: 0 }, { opacity: 1, ease: 'power1.inOut' }, 0)
                        .fromTo('#mouse-gradient', { opacity: 0 }, { opacity: 1, ease: 'power1.inOut' }, 0)
-                       .fromTo('#hero .absolute.inset-0.z-0', { opacity: 1 }, { opacity: 0, ease: 'power1.inOut' }, 0);
+                       .fromTo('#hero .absolute.inset-0.z-0', { opacity: 1 }, { opacity: 0, ease: 'power1.inOut' }, 0)
+                       .fromTo('#terminal-section .absolute.inset-0.z-0', { opacity: 1 }, { opacity: 0, ease: 'power1.inOut' }, 0);
 
             // Animate sections after terminal - STAGGERED REVEALS
             sectionsToAnimate.forEach((section, index) => {
