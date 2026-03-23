@@ -48,7 +48,6 @@
     }
 
         #terminal-section {
-            background-color: #000000;
             position: relative;
             z-index: 10;
         }
@@ -867,7 +866,9 @@
 
         <!-- Terminal Section -->
         <section id="terminal-section" class="min-h-screen flex items-center justify-center px-4" style="display: none;">
-            <div class="terminal max-w-3xl mx-auto w-full">
+            <!-- Dedicated masked background layer to prevent leaks but blend smoothly -->
+            <div class="absolute inset-0 z-0 bg-black" style="-webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%); mask-image: linear-gradient(to bottom, black 85%, transparent 100%);"></div>
+            <div class="terminal max-w-3xl mx-auto w-full relative z-10">
                 <div class="terminal-header">
                     <div class="absolute left-1/2 transform -translate-x-1/2 text-white font-bold text-sm">Terminal</div>
                     <div class="terminal-buttons">
@@ -938,8 +939,8 @@
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-20 px-4 animate-on-scroll">
-            <div class="max-w-7xl mx-auto">
+        <section id="about" class="py-20 px-4">
+            <div class="max-w-7xl mx-auto animate-on-scroll relative z-10">
                 <h2 class="text-5xl font-black text-center mb-12 reveal-text">
                     <span class="reveal-text-inner">
                         <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Information.png" alt="Information" width="50" height="50" class="inline-emoji" /> About Me
@@ -1760,12 +1761,13 @@
                     trigger: '#about',
                     start: 'top 100%',
                     end: 'top 10%',
-                    scrub: true
+                    scrub: true,
+                    invalidateOnRefresh: true
                 }
             });
             crossfadeTl.fromTo('#gradient-blob-container', { opacity: 0 }, { opacity: 1, ease: 'power1.inOut' }, 0)
                        .fromTo('#mouse-gradient', { opacity: 0 }, { opacity: 1, ease: 'power1.inOut' }, 0)
-                       .to('#hero .absolute.inset-0.z-0', { opacity: 0, ease: 'power1.inOut' }, 0);
+                       .fromTo('#hero .absolute.inset-0.z-0', { opacity: 1 }, { opacity: 0, ease: 'power1.inOut' }, 0);
 
             // Animate sections after terminal - STAGGERED REVEALS
             sectionsToAnimate.forEach((section, index) => {
